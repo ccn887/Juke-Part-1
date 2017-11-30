@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom';
 import Sidebar from './sidebar';
 import Footer from './footer';
 
-const albumsList = (props) => {
+const albumsList = ({album,handleIt}) => {
   return (
     <div className="col-xs-4">
-      <a className="thumbnail" href="#">
-        <img src={props.imageUrl} />
+      <a onClick={() => handleIt(album.id)} className="thumbnail" href="#">
+        <img src={album.imageUrl} />
         <div className="caption">
           <h5>
-            <span>{props.name}</span>
+            <span>{album.name}</span>
           </h5>
-          <small>{props.songs.length}</small>
+          <small>{album.songs.length}</small>
         </div>
       </a>
     </div>
@@ -21,25 +21,22 @@ const albumsList = (props) => {
 
 const AllAlbums = ({music,handleIt}) => {
   return (
-    <div id="main" className="container-fluid">
-      <div className="col-xs-10">
-        <h3>Albums</h3>
-        <div className="row">
+    <div className="row">
+<h3>Albums</h3>
+
           <div>
             {
               music.map((album) => {
               return (
                 <div key={album.id}>
-                  {albumsList(album)}
-                  <a onClick={() => handleIt(album)}></a>
-                </div>
+                  {albumsList({album,handleIt})}
+                  </div>
               )
             })
             }
           </div>
         </div>
-      </div>
-    </div>
+
   )
 }
 

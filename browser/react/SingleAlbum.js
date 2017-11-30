@@ -1,19 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const SingleAlbum = ({current}) => {
-// class SingleAlbum extends React.Component {
-  // constructor() {
-  //   super()
-  //   this.state = {
-  //     greetings: 'Wooo!!!',
-  //   }
-  // }
+// const songInfo = (){
+//   return(
+//     <tr>
+//     <td>
+//       <button className="btn btn-default btn-xs">
+//         <span className="glyphicon glyphicon-play"></span>
+//       </button>
+//     </td>
+//     <td>{this.props.current.songs[id]}</td>
+//     <td>{this.props.current.songs[id]}</td>
+//     <td>I SHOULD BE A SONG GENRE</td>
+//   </tr>
+
+//   )
+// }
+
+
+
+class SingleAlbum extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      greetings: 'Wooo!!!',
+    }
+  }
+  render(){
     return (
       <div className="album col-xs-10">
         <div>
-          <h3>{current.name}</h3>
-          <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=IshouldBEanIMAGE&w=300&h=300" className="img-thumbnail" />
+          <h3>{this.props.current.name}</h3>
+          <img src={this.props.current.imageUrl}  className="img-thumbnail" />
         </div>
         <table className='table'>
           <thead>
@@ -25,31 +43,34 @@ const SingleAlbum = ({current}) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <button className="btn btn-default btn-xs">
-                  <span className="glyphicon glyphicon-play"></span>
-                </button>
-              </td>
-              <td>I SHOULD BE A SONG NAME</td>
-              <td>I SHOULD BE A STRING OF THIS SONG'S ARTISTS</td>
-              <td>I SHOULD BE A SONG GENRE</td>
-            </tr>
-            <tr>
-              <td>
-                <button className="btn btn-default btn-xs">
-                  <span className="glyphicon glyphicon-play"></span>
-                </button>
-              </td>
-              <td>I SHOULD BE ANOTHER SONG NAME</td>
-              <td>I SHOULD BE A STRING OF THAT SONG'S ARTISTS</td>
-              <td>I SHOULD BE A SONG GENRE</td>
-            </tr>
+          {
+             this.props.current.songs.map(song => {
+
+              console.log('artists:', song.artists[0].name)
+              return (
+                <tr className={song.id === this.props.currentSong.id ? 'active' : ''}>
+                <td>
+                <div key={song.id}>
+                  <button onClick = {() => {this.props.start(song.audioUrl, song)}} className={song.id === this.props.currentSong.id ? '.btn.disabled' : "btn btn-default btn-xs"} >
+                    <span className="glyphicon glyphicon-play"></span>
+                  </button>
+                  </div>
+                </td>
+                <td>{song.name}</td>
+                <td>{song.artists[0].name}</td>
+                <td>{song.genre}</td>
+                </tr>
+              )
+            }
+            )
+          }
           </tbody>
         </table>
       </div>
     )
   }
+}
+
 
 
 
